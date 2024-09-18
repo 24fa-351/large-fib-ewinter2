@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-unsigned long long int terms[1000];
-
 unsigned long long int fib_r(unsigned long long int n) {
    if (n == 1) 
       return 1;
@@ -39,7 +37,7 @@ int main(int argc, char *argv[]) {
 
    int num = atoi(argv[1]) - 1;
    
-   unsigned long long int result;
+   unsigned long long int result = 0;
 
    if (argv[2][0] == 'r') {
       result = fib_r(num);
