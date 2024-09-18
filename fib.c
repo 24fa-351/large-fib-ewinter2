@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
     return 0;
    }
 
-   printf("%llu\n", result);
+   printf("%llu", result);
 
    return 0;
 }
