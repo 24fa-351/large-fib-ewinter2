@@ -1,27 +1,40 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
+#include <stdbool.h>
 
-unsigned long long int fib_r(unsigned long long int n) {
-   if (n == 1) 
-      return 1;
-   else if (n <= 0)
-      return 0;
-    
-   return fib_r(n - 1) + fib_r(n - 2);
+bool sumWouldOverflow(unsigned long long a, unsigned long long b) {
+   return a > ULLONG_MAX - b;
+}
+
+unsigned long long int fib_r(int index) {
+   if (index <= 1) {
+      return index;
+   }
+
+   unsigned long long minus1result = fib_r(index - 1);
+   unsigned long long minus2result = fib_r(index - 2);
+
+   if (sumWouldOverflow(minus1result, minus2result)){
+      fprintf(stderr, "Overflow at Index %d\n", index + 2);
+      return ULLONG_MAX;
+   }   
+   return minus1result + minus2result;
 }
 
 unsigned long long int fib_i(int n) {
-   if (n == 1) 
-      return 1;
-   else if (n <= 0)
-      return 0;
-
+   if (n <= 1) {
+      return n;
+   }
    unsigned long long int a = 0;
    unsigned long long int b = 1;
-   unsigned long long int fib;
 
    for (int i = 2; i <= n; i++) {
-      fib = a + b;
+      if (sumWouldOverflow(a, b)){
+         fprintf(stderr, "Overflow at Index %d\n", i + 2);
+         return ULLONG_MAX;
+      }
+      unsigned long long int fib = a + b;
       a = b;
       b = fib;
    }
@@ -30,7 +43,7 @@ unsigned long long int fib_i(int n) {
 
 int main(int argc, char *argv[]) {
 
-   if (argc != 3) {
+   if (argc != 3 || argv[2][0] == 'r' && argv[2][0] == 'i') {
       printf("Invalid Input\n");
       return 0;
    }
@@ -42,12 +55,8 @@ int main(int argc, char *argv[]) {
    if (argv[2][0] == 'r') {
       result = fib_r(num);
    }
-   else if (argv[2][0] == 'i') {
-      result = fib_i(num);
-   }
    else {
-    printf("Invalid method.\n");
-    return 0;
+      result = fib_i(num);
    }
 
    printf("%lld\n", result);
