@@ -43,7 +43,7 @@ unsigned long long int fib_i(int n) {
 
 int main(int argc, char *argv[]) {
 
-   if (argc != 3 || argv[2][0] == 'r' && argv[2][0] == 'i') {
+   if (argc != 3 || argv[2][0] != 'r' && argv[2][0] != 'i') {
       printf("Invalid Input\n");
       return 0;
    }
