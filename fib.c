@@ -22,14 +22,14 @@ unsigned long long int fib_r(int index) {
    return minus1result + minus2result;
 }
 
-unsigned long long int fib_i(int n) {
-   if (n <= 1) {
-      return n;
+unsigned long long int fib_i(int index) {
+   if (index <= 1) {
+      return index;
    }
    unsigned long long int a = 0;
    unsigned long long int b = 1;
 
-   for (int i = 2; i <= n; i++) {
+   for (int i = 2; i <= index; i++) {
       if (sumWouldOverflow(a, b)){
          fprintf(stderr, "Overflow at Index %d\n", i + 2);
          return ULLONG_MAX;
